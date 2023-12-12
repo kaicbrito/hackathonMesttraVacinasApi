@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interface Web</title>
+  <!-- Adicione links para bibliotecas/frameworks necessários (ex: Bootstrap) aqui -->
+</head>
+<body>
+
+  <h1>Cadastro de Posto de Aplicação</h1>
+
+  <!-- Formulário de Cadastro de Posto -->
+  <form id="cadastroForm">
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" required>
+    <br>
+    <label for="endereco">Endereço:</label>
+    <input type="text" id="endereco" name="endereco" required>
+    <br>
+    <label for="isPublico">É público?</label>
+    <input type="checkbox" id="isPublico" name="isPublico">
+    <br>
+    <button type="button" onclick="cadastrarPosto()">Cadastrar Posto</button>
+  </form>
+
+  <hr>
+
+  <h1>Pesquisa de Posto por Endereço</h1>
+
+  <!-- Formulário de Pesquisa de Posto por Endereço -->
+  <form id="pesquisaForm">
+    <label for="enderecoPesquisa">Endereço:</label>
+    <input type="text" id="enderecoPesquisa" name="enderecoPesquisa" required>
+    <br>
+    <button type="button" onclick="pesquisarPostoPorEndereco()">Pesquisar Posto</button>
+  </form>
+
+  <!-- Resultado da Pesquisa -->
+  <div id="resultadoPesquisa"></div>
+
+  <!-- Adicione scripts necessários aqui (ex: script de requisição HTTP, jQuery, etc.) -->
+
+  <script>
+    // Função para cadastrar um posto de aplicação
+    function cadastrarPosto() {
+      // Implemente a lógica para enviar uma requisição POST para a API de cadastro
+      // Exemplo usando fetch:
+      fetch('/api/posto/cadastrar', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nome: document.getElementById('nome').value,
+          endereco: document.getElementById('endereco').value,
+          isPublico: document.getElementById('isPublico').checked,
+        }),
+      })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error('Erro:', error));
+    }
+
+    // Função para pesquisar um posto por endereço
+    function pesquisarPostoPorEndereco() {
+      const endereco = document.getElementById('enderecoPesquisa').value;
+
+      // Implemente a lógica para enviar uma requisição GET para a API de pesquisa
+      // Exemplo usando fetch:
+      fetch(`/api/posto/pesquisar/${endereco}`)
+      .then(response => response.json())
+      .then(data => {
+        // Exemplo de exibição do resultado no HTML (ajuste conforme necessário)
+        const resultadoDiv = document.getElementById('resultadoPesquisa');
+        resultadoDiv.innerHTML = '<h3>Resultados:</h3>';
+        data.postos.forEach(posto => {
+          resultadoDiv.innerHTML += `<p>ID: ${posto.id}, Nome: ${posto.nome}, Endereço: ${posto.endereco}, Público: ${posto.is_publico}</p>`;
+        });
+      })
+      .catch(error => console.error('Erro:', error));
+    }
+  </script>
+
+</body>
+</html>

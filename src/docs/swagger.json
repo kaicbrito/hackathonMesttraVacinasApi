@@ -1,0 +1,44 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Carteira de Vacinação API",
+    "version": "1.0.0",
+    "description": "Documentação da API da Carteira de Vacinação"
+  },
+  "basePath": "/api",
+  "paths": {
+    "/pessoas": {
+      "get": {
+        "summary": "Obter lista de pessoas",
+        "responses": {
+          "200": {
+            "description": "Operação bem-sucedida",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Pessoa"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Pessoa": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "nome": {
+          "type": "string"
+        },
+        "idade": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}
